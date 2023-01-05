@@ -52,40 +52,53 @@ function startTheGame() {
     const myChoice = getMyChoice();
     console.log(`myChoice: `, myChoice);
 
-    // get computer choice
-    const computerChoice = getComputerChoice();
-    console.log("computerChoice: ", computerChoice);
-    // find out if we win, tie or lose
-    const result = doIWin(myChoice, computerChoice);
-    console.log(`result: ${result}`);
+    if (
+      myChoice === "p" ||
+      myChoice === "P" ||
+      myChoice === "r" ||
+      myChoice === "R" ||
+      myChoice === "s" ||
+      myChoice === "S"
+    ) {
+      // get computer choice
+      const computerChoice = getComputerChoice();
+      console.log("computerChoice: ", computerChoice);
+      // find out if we win, tie or lose
+      const result = doIWin(myChoice, computerChoice);
+      console.log(`result: ${result}`);
 
-    // store and accumulate the result
-    resultCount[result] = resultCount[result] + 1;
-    console.log("resultCount: ", resultCount);
-    // increment the number of plays by 1
-    numOfPlays += 1;
-    console.log("numOfPlays: ", numOfPlays);
+      // store and accumulate the result
+      resultCount[result] = resultCount[result] + 1;
+      console.log("resultCount: ", resultCount);
+      // increment the number of plays by 1
+      numOfPlays += 1;
+      console.log("numOfPlays: ", numOfPlays);
 
-    // tell the user if he/she wins, ties or loses
-    alert(`
+      // tell the user if he/she wins, ties or loses
+      alert(`
         Game Number: ${numOfPlays}
         Your choice: ${CHOICE_TO_WORD[myChoice]}
         Computer choice: ${CHOICE_TO_WORD[computerChoice]}
         Result: ${result}
       `);
 
-    // show total wins, ties, and losses after every 10 rounds
-    if (numOfPlays % 10 === 0) {
-      alert(`
+      // show total wins, ties, and losses after every 10 rounds
+      if (numOfPlays % 10 === 0) {
+        alert(`
       Summary After Every 10 Rounds:
       Total Game Play: ${numOfPlays}
       Wins: ${resultCount.win}
       Loses: ${resultCount.loss}
       Ties: ${resultCount.tie}
       `);
-    }
+      }
 
-    continueToPlay = confirm("Do you want to continue?");
+      continueToPlay = confirm("Do you want to continue?");
+    } else {
+      continueToPlay = confirm(
+        "Invalid Input. Please enter either R(Rock), P(paper) or S(scissors) in the dialog. Do you want to continue?"
+      );
+    }
   }
 }
 
