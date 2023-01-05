@@ -35,18 +35,26 @@ function startTheGame() {
     loss: 0
   };
 
-  // get my choice
-  const myChoice = getMyChoice();
-  console.log(`myChoice: `, myChoice);
-  // get computer choice
-  const computerChoice = getComputerChoice();
-  console.log("computerChoice: ", computerChoice);
-  // find out if we win, tie or lose
-  const result = doIWin(myChoice, computerChoice);
-  console.log(`result: ${result}`);
-  // store and accumulate the result
-  resultCount[result] = resultCount[result] + 1;
-  console.log("resultCount: ", resultCount);
+  let numOfPlays = 0;
+  let continueToPlay = true;
+
+  while (continueToPlay) {
+    // get my choice
+    const myChoice = getMyChoice();
+    console.log(`myChoice: `, myChoice);
+    // get computer choice
+    const computerChoice = getComputerChoice();
+    console.log("computerChoice: ", computerChoice);
+    // find out if we win, tie or lose
+    const result = doIWin(myChoice, computerChoice);
+    console.log(`result: ${result}`);
+    // store and accumulate the result
+    resultCount[result] = resultCount[result] + 1;
+    console.log("resultCount: ", resultCount);
+    // increment the number of plays by 1
+    numOfPlays += 1;
+    console.log("numOfPlays: ", numOfPlays);
+  }
 }
 
 function doIWin(myChoice, computerChoice) {
@@ -76,7 +84,7 @@ function getComputerChoice() {
   // computer can only choose one of the item in the choices array
   const choicesArr = ["R", "P", "S"];
   // get random number from 0 - 2
-  const randomNum = parseInt(Math.random() * 3);
+  const randomNum = Math.floor(Math.random() * choicesArr.length);
   // get computer choice
   const computerChoice = choicesArr[randomNum];
 
