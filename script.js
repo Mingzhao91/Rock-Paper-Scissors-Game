@@ -15,3 +15,91 @@ Follow your pseudocode as much as you can, and if you get stuck don't worry, thi
  * 
  * 
  */
+
+const RESULT = {
+  WIN: 1,
+  TIE: 0,
+  LOSS: -1
+};
+
+const CHOICE = {
+  ROCK: "R",
+  PAPER: "P",
+  SCISSORS: "S"
+};
+
+function startTheGame() {
+  // get my choice
+  const myChoice = getMyChoice();
+  console.log(`myChoice: `, myChoice);
+  // get computer choice
+  const computerChoice = getComputerChoice();
+  console.log("computerChoice: ", computerChoice);
+}
+
+function doIWin(myChoice, computerChoice) {
+  let result = null;
+
+  myChoice = myChoice.toLowercase();
+  computerChoice = computerChoice.toLowercase();
+
+  if (myChoice === computerChoice) {
+    result = RESULT.TIE;
+  } else {
+    if (myChoice === CHOICE.PAPER && computerChoice === CHOICE.ROCK) {
+      result = RESULT.WIN;
+    } else {
+      result = RESULT.LOSS;
+    }
+
+    if (myChoice === CHOICE.PAPER && computerChoice === CHOICE.SCISSORS) {
+      result = RESULT.LOSS;
+    } else {
+      result = RESULT.WIN;
+    }
+
+    if (myChoice === CHOICE.ROCK && computerChoice === CHOICE.PAPER) {
+      result = RESULT.LOSS;
+    } else {
+      result = RESULT.WIN;
+    }
+
+    if (myChoice === CHOICE.ROCK && computerChoice === CHOICE.SCISSORS) {
+      result = RESULT.WIN;
+    } else {
+      result = RESULT.LOSS;
+    }
+
+    if (myChoice === CHOICE.SCISSORS && computerChoice === CHOICE.ROCK) {
+      result = RESULT.LOSS;
+    } else {
+      result = RESULT.WIN;
+    }
+
+    if (myChoice === CHOICE.SCISSORS && computerChoice === CHOICE.PAPER) {
+      result = RESULT.WIN;
+    } else {
+      result = RESULT.LOSS;
+    }
+  }
+}
+
+function getComputerChoice() {
+  // computer can only choose one of the item in the choices array
+  const choicesArr = ["R", "P", "S"];
+  // get random number from 0 - 2
+  const randomNum = parseInt(Math.random() * 3);
+  // get computer choice
+  const computerChoice = choicesArr[randomNum];
+
+  return computerChoice;
+}
+
+function getMyChoice() {
+  const myChoice = prompt(`
+  Enter either R(Rock), P(paper) or S(scissors) as my choice.
+  `);
+  return myChoice;
+}
+
+startTheGame();
