@@ -28,6 +28,15 @@ const CHOICE = {
   SCISSORS: "s"
 };
 
+const CHOICE_TO_WORD = {
+  p: "paper",
+  P: "paper",
+  r: "rock",
+  R: "rock",
+  s: "scissors",
+  S: "scissors"
+};
+
 function startTheGame() {
   let resultCount = {
     win: 0,
@@ -48,12 +57,22 @@ function startTheGame() {
     // find out if we win, tie or lose
     const result = doIWin(myChoice, computerChoice);
     console.log(`result: ${result}`);
+
+    // tell the user if he/she wins, ties or loses
+    alert(`
+      Your choice: ${CHOICE_TO_WORD[myChoice]}
+      Computer choice: ${CHOICE_TO_WORD[computerChoice]}
+      Result: ${result}
+    `);
+
     // store and accumulate the result
     resultCount[result] = resultCount[result] + 1;
     console.log("resultCount: ", resultCount);
     // increment the number of plays by 1
     numOfPlays += 1;
     console.log("numOfPlays: ", numOfPlays);
+
+    continueToPlay = confirm("Do you want to continue?");
   }
 }
 
