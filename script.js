@@ -17,71 +17,59 @@ Follow your pseudocode as much as you can, and if you get stuck don't worry, thi
  */
 
 const RESULT = {
-  WIN: 1,
-  TIE: 0,
-  LOSS: -1
+  WIN: "win",
+  TIE: "tie",
+  LOSS: "loss"
 };
 
 const CHOICE = {
-  ROCK: "R",
-  PAPER: "P",
-  SCISSORS: "S"
+  ROCK: "r",
+  PAPER: "p",
+  SCISSORS: "s"
 };
 
 function startTheGame() {
+  let resultCount = {
+    win: 0,
+    tie: 0,
+    loss: 0
+  };
+
   // get my choice
   const myChoice = getMyChoice();
   console.log(`myChoice: `, myChoice);
   // get computer choice
   const computerChoice = getComputerChoice();
   console.log("computerChoice: ", computerChoice);
+  // find out if we win, tie or lose
+  const result = doIWin(myChoice, computerChoice);
+  console.log(`result: ${result}`);
+  // store and accumulate the result
+  resultCount[result] = resultCount[result] + 1;
+  console.log("resultCount: ", resultCount);
 }
 
 function doIWin(myChoice, computerChoice) {
   let result = null;
 
-  myChoice = myChoice.toLowercase();
-  computerChoice = computerChoice.toLowercase();
+  myChoice = myChoice.toLocaleLowerCase();
+  computerChoice = computerChoice.toLocaleLowerCase();
 
   if (myChoice === computerChoice) {
     result = RESULT.TIE;
   } else {
-    if (myChoice === CHOICE.PAPER && computerChoice === CHOICE.ROCK) {
-      result = RESULT.WIN;
-    } else {
-      result = RESULT.LOSS;
-    }
-
-    if (myChoice === CHOICE.PAPER && computerChoice === CHOICE.SCISSORS) {
-      result = RESULT.LOSS;
-    } else {
-      result = RESULT.WIN;
-    }
-
-    if (myChoice === CHOICE.ROCK && computerChoice === CHOICE.PAPER) {
-      result = RESULT.LOSS;
-    } else {
-      result = RESULT.WIN;
-    }
-
-    if (myChoice === CHOICE.ROCK && computerChoice === CHOICE.SCISSORS) {
-      result = RESULT.WIN;
-    } else {
-      result = RESULT.LOSS;
-    }
-
-    if (myChoice === CHOICE.SCISSORS && computerChoice === CHOICE.ROCK) {
-      result = RESULT.LOSS;
-    } else {
-      result = RESULT.WIN;
-    }
-
-    if (myChoice === CHOICE.SCISSORS && computerChoice === CHOICE.PAPER) {
+    if (
+      (myChoice === CHOICE.PAPER && computerChoice === CHOICE.ROCK) ||
+      (myChoice === CHOICE.ROCK && computerChoice === CHOICE.SCISSORS) ||
+      (myChoice === CHOICE.SCISSORS && computerChoice === CHOICE.PAPER)
+    ) {
       result = RESULT.WIN;
     } else {
       result = RESULT.LOSS;
     }
   }
+
+  return result;
 }
 
 function getComputerChoice() {
