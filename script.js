@@ -50,7 +50,7 @@ function startTheGame() {
   while (continueToPlay) {
     // get my choice
     const myChoice = getMyChoice();
-    console.log(`myChoice: `, myChoice);
+    // console.log(`myChoice: `, myChoice);
 
     if (
       myChoice === "p" ||
@@ -62,17 +62,19 @@ function startTheGame() {
     ) {
       // get computer choice
       const computerChoice = getComputerChoice();
-      console.log("computerChoice: ", computerChoice);
+      //console.log("computerChoice: ", computerChoice);
+
       // find out if we win, tie or lose
       const result = doIWin(myChoice, computerChoice);
-      console.log(`result: ${result}`);
+      //console.log(`result: ${result}`);
 
       // store and accumulate the result
       resultCount[result] = resultCount[result] + 1;
-      console.log("resultCount: ", resultCount);
+      //console.log("resultCount: ", resultCount);
+
       // increment the number of plays by 1
       numOfPlays += 1;
-      console.log("numOfPlays: ", numOfPlays);
+      //console.log("numOfPlays: ", numOfPlays);
 
       // tell the user if he/she wins, ties or loses
       alert(`
@@ -85,21 +87,42 @@ function startTheGame() {
       // show total wins, ties, and losses after every 10 rounds
       if (numOfPlays % 10 === 0) {
         alert(`
-      Summary After Every 10 Rounds:
-      Total Game Play: ${numOfPlays}
-      Wins: ${resultCount.win}
-      Loses: ${resultCount.loss}
-      Ties: ${resultCount.tie}
-      `);
+        Summary After Every 10 Rounds:
+        ${getTotalResult(numOfPlays, resultCount)}
+        `);
       }
 
       continueToPlay = confirm("Do you want to continue?");
     } else {
-      continueToPlay = confirm(
-        "Invalid Input. Please enter either R(Rock), P(paper) or S(scissors) in the dialog. Do you want to continue?"
-      );
+      if (myChoice === null) {
+        showGameOverAlert(numOfPlays, resultCount);
+      } else {
+        continueToPlay = confirm(
+          "Invalid Input. Please enter either R(Rock), P(paper) or S(scissors) in the dialog. Do you want to continue?"
+        );
+      }
     }
   }
+
+  if (!continueToPlay) {
+    showGameOverAlert(numOfPlays, resultCount);
+  }
+}
+
+function showGameOverAlert(numOfPlays, resultCount) {
+  alert(`
+  Game Over
+  ${getTotalResult(numOfPlays, resultCount)}
+  `);
+}
+
+function getTotalResult(numOfPlays, resultCount) {
+  return `
+  Total Game Play: ${numOfPlays}
+  Wins: ${resultCount.win}
+  Loses: ${resultCount.loss}
+  Ties: ${resultCount.tie}
+  `;
 }
 
 function doIWin(myChoice, computerChoice) {
